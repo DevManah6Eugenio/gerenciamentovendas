@@ -18,4 +18,16 @@ public class CategoriaService {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElse(null);
 	}
+	
+	public Categoria cadastrar(Categoria categoria) {
+		return repo.save(categoria);
+	}
+	
+	public Categoria atualizar(Categoria categoria) {
+		return repo.save(categoria);
+	}
+	
+	public void deletar(Integer id) {
+		repo.deleteById(id);
+	}
 }

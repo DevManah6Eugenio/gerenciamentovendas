@@ -1,5 +1,7 @@
 package com.gerenciamentovendas.resources;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,7 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET) 
-	public ResponseEntity<Categoria> getCategoria(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> getCategoria(@PathVariable UUID id) {
 		Categoria obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -31,14 +33,14 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<Categoria> putCategoria(@RequestBody Categoria categoria, @PathVariable Integer id) {
+	public ResponseEntity<Categoria> putCategoria(@RequestBody Categoria categoria, @PathVariable UUID id) {
 		categoria.setId(id);
 		Categoria obj = service.atualizar(categoria);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE) 
-	public ResponseEntity<Categoria> deleteCategoria(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> deleteCategoria(@PathVariable UUID id) {
 		Categoria obj = service.buscar(id);
 		service.deletar(id);
 		return ResponseEntity.ok().body(obj);

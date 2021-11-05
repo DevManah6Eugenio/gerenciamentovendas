@@ -1,5 +1,7 @@
 package com.gerenciamentovendas.resources;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +20,7 @@ public class FornecedorResource {
 	private FornecedorService service;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET) 
-	public ResponseEntity<Fornecedor> getFornecedor(@PathVariable Integer id) {
+	public ResponseEntity<Fornecedor> getFornecedor(@PathVariable UUID id) {
 		Fornecedor obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -30,14 +32,14 @@ public class FornecedorResource {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<Fornecedor> putFornecedor(@RequestBody Fornecedor fornecedor, @PathVariable Integer id) {
+	public ResponseEntity<Fornecedor> putFornecedor(@RequestBody Fornecedor fornecedor, @PathVariable UUID id) {
 		fornecedor.setId(id);
 		Fornecedor obj = service.atualizar(fornecedor);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE) 
-	public ResponseEntity<Fornecedor> deleteFornecedor(@PathVariable Integer id) {
+	public ResponseEntity<Fornecedor> deleteFornecedor(@PathVariable UUID id) {
 		Fornecedor obj = service.buscar(id);
 		service.deletar(id);
 		return ResponseEntity.ok().body(obj);

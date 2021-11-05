@@ -1,6 +1,7 @@
 package com.gerenciamentovendas.services;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class FornecedorService {
 	@Autowired
 	private FornecedorRepository repo;
 
-	public Fornecedor buscar(Integer id) {
+	public Fornecedor buscar(UUID id) {
 		Optional<Fornecedor> obj = repo.findById(id);
 		return obj.orElse(null);
 	}
@@ -26,7 +27,7 @@ public class FornecedorService {
 		return repo.save(fornecedor);
 	}
 
-	public void deletar(Integer id) {
+	public void deletar(UUID id) {
 		repo.deleteById(id);
 	}
 }

@@ -1,7 +1,6 @@
 package com.gerenciamentovendas.domain;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -10,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -23,32 +21,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Produto implements Serializable {
+public class Telefone implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(generator = "uuid2")
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	@Type(type = "uuid-binary")
-	private UUID Id;
+	private UUID id;
+	
+	@Column(nullable = false, length = 3)
+	private String ddd;
 	
 	@Column(nullable = false, length = 10)
-	private String codigo;
-	
-	@Column(nullable = false, length = 40)
-	private String nome;
-	
-	private Double percentualLucro;
-	
-	@Column(nullable = false)
-	private Double valorVenda;
+	private String numero;
 	
 	@ManyToOne
-	@JoinColumn(name = "categoria_id")
-	private Categoria categoria;
-	
-	@OneToMany(mappedBy = "produto")
-	private List<EntradaProduto> entradaProduto;
+	@JoinColumn(name = "fornecedor_id")
+	private Fornecedor fornecedor;
 }

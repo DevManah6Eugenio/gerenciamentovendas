@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -38,10 +40,11 @@ public class Entrada implements Serializable {
 	
 	private Double custosAdicionais;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;
 	
-	@OneToMany(mappedBy = "entrada")
+	@OneToMany(mappedBy = "entreda")
 	private List<EntradaProduto> entradaProduto;
 }

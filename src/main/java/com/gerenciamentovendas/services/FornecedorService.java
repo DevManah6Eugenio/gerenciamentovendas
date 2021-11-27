@@ -10,6 +10,7 @@ import com.gerenciamentovendas.domain.Fornecedor;
 import com.gerenciamentovendas.repositories.EmailRepository;
 import com.gerenciamentovendas.repositories.FornecedorRepository;
 import com.gerenciamentovendas.repositories.TelefoneRepository;
+import com.gerenciamentovendas.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class FornecedorService {
@@ -22,7 +23,7 @@ public class FornecedorService {
 	
 	public Fornecedor buscar(UUID id) {
 		Optional<Fornecedor> obj = repoFornecedor.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Fornecedor não encontrado! Id: " + id));
 	}
 
 	public Fornecedor cadastrar(Fornecedor fornecedor) {

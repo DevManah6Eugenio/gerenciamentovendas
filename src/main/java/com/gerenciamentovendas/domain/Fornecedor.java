@@ -1,7 +1,7 @@
 package com.gerenciamentovendas.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -44,14 +44,14 @@ public class Fornecedor implements Serializable {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "fornecedor")
-	private List<Email> emails;
+	private Set<Email> emails;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "fornecedor")
-	private List<Telefone> telefones;
+	private Set<Telefone> telefones;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "fornecedor")
-	private List<Entrada> entrada;
+	private Set<Entrada> entrada;
 	
 }

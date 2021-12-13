@@ -30,6 +30,7 @@ public class FornecedorService {
 	}
 
 	public Fornecedor cadastrar(Fornecedor fornecedor) {
+		fornecedor.setId(null);
 		Fornecedor obj = repoFornecedor.save(fornecedor);
 		repoEmail.saveAll(fornecedor.getEmails());
 		repoTelefone.saveAll(fornecedor.getTelefones());

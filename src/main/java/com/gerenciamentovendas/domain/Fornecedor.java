@@ -13,8 +13,6 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -42,15 +40,12 @@ public class Fornecedor implements Serializable {
 	@Column(nullable = false, length = 40)
 	private String nomeFantasia;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "fornecedor")
 	private Set<Email> emails;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "fornecedor")
 	private Set<Telefone> telefones;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "fornecedor")
 	private Set<Entrada> entrada;
 	

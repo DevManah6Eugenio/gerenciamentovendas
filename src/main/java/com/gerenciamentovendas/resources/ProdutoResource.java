@@ -3,6 +3,8 @@ package com.gerenciamentovendas.resources;
 import java.net.URI;
 import java.util.UUID;
 
+import com.gerenciamentovendas.dto.request.ProdutoDTO;
+import com.gerenciamentovendas.dto.response.MessageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,29 +25,26 @@ public class ProdutoResource {
 	private ProdutoService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Produto> getProduto(@PathVariable UUID id) {
-		Produto obj = service.buscar(id);
+	public ResponseEntity<ProdutoDTO> getProduto(@PathVariable UUID id) {
+		ProdutoDTO obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> postProduto(@RequestBody Produto produto) {
-		Produto obj = service.cadastrar(produto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	public MessageResponseDTO postProduto(@RequestBody ProdutoDTO produtoDTO) {
+		return service.cadastrar(produtoDTO);
+		//URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		//return ResponseEntity.created(uri).build();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> putProduto(@RequestBody Produto produto, @PathVariable UUID id) {
-		produto.setId(id);
-		service.atualizar(produto);
-		return ResponseEntity.noContent().build();
+	public MessageResponseDTO putProduto(@RequestBody ProdutoDTO produtoDTO, @PathVariable UUID id) {
+		return service.atualizar(produtoDTO, id);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteProduto(@PathVariable UUID id) {
-		service.deletar(id);
-		return ResponseEntity.noContent().build();
+	public MessageResponseDTO deleteProduto(@PathVariable UUID id) {
+		return service.deletar(id);
 	}
 
 }

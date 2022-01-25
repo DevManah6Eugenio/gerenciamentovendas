@@ -3,6 +3,8 @@ package com.gerenciamentovendas.resources;
 import java.net.URI;
 import java.util.UUID;
 
+import com.gerenciamentovendas.dto.request.FornecedorDTO;
+import com.gerenciamentovendas.dto.response.MessageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,33 +20,31 @@ import com.gerenciamentovendas.services.FornecedorService;
 @RestController
 @RequestMapping(value="/fornecedores")
 public class FornecedorResource {
+
 	@Autowired
 	private FornecedorService service;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET) 
-	public ResponseEntity<Fornecedor> getFornecedor(@PathVariable UUID id) {
-		Fornecedor obj = service.buscar(id);
+	public ResponseEntity<FornecedorDTO> getFornecedor(@PathVariable UUID id) {
+		FornecedorDTO obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> postFornecedor(@RequestBody Fornecedor fornecedor) {
-		Fornecedor obj = service.cadastrar(fornecedor);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	public MessageResponseDTO postFornecedor(@RequestBody FornecedorDTO fornecedorDTO) {
+		return service.cadastrar(fornecedorDTO);
+		//URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		//return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<?> putFornecedor(@RequestBody Fornecedor fornecedor, @PathVariable UUID id) {
-		fornecedor.setId(id);
-		service.atualizar(fornecedor);
-		return ResponseEntity.noContent().build();
+	public MessageResponseDTO putFornecedor(@RequestBody FornecedorDTO fornecedorDTO, @PathVariable UUID id) {
+		return service.atualizar(fornecedorDTO, id);
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE) 
-	public ResponseEntity<?> deleteFornecedor(@PathVariable UUID id) {
-		service.deletar(id);
-		return ResponseEntity.noContent().build();
+	public MessageResponseDTO deleteFornecedor(@PathVariable UUID id) {
+		return service.deletar(id);
 	}
 
 }

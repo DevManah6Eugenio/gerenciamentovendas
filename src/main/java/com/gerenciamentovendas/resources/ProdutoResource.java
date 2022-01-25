@@ -29,24 +29,23 @@ public class ProdutoResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Produto> postProduto(@RequestBody Produto produto) {
+	public ResponseEntity<?> postProduto(@RequestBody Produto produto) {
 		Produto obj = service.cadastrar(produto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		return ResponseEntity.created(uri).build();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Produto> putProduto(@RequestBody Produto produto, @PathVariable UUID id) {
+	public ResponseEntity<?> putProduto(@RequestBody Produto produto, @PathVariable UUID id) {
 		produto.setId(id);
-		Produto obj = service.atualizar(produto);
-		return ResponseEntity.ok().body(obj);
+		service.atualizar(produto);
+		return ResponseEntity.noContent().build();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Produto> deleteProduto(@PathVariable UUID id) {
-		Produto obj = service.buscar(id);
+	public ResponseEntity<?> deleteProduto(@PathVariable UUID id) {
 		service.deletar(id);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.noContent().build();
 	}
 
 }

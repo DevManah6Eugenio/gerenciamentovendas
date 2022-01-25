@@ -26,6 +26,7 @@ public class ProdutoService {
 	}
 
 	public Produto atualizar(Produto produto) {
+		this.buscar(produto.getId());
 		return repo.save(produto);
 	}
 

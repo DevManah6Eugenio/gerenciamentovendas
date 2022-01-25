@@ -27,10 +27,12 @@ public class CategoriaService {
 	}
 	
 	public Categoria atualizar(Categoria categoria) {
+		this.buscar(categoria.getId());
 		return repo.save(categoria);
 	}
 	
 	public void deletar(UUID id) {
+		this.buscar(id);
 		repo.deleteById(id);
 	}
 }

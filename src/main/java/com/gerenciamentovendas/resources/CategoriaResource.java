@@ -29,23 +29,22 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Categoria> postCategoria(@RequestBody Categoria categoria) {
+	public ResponseEntity<?> postCategoria(@RequestBody Categoria categoria) {
 		Categoria obj = service.cadastrar(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<Categoria> putCategoria(@RequestBody Categoria categoria, @PathVariable UUID id) {
+	public ResponseEntity<?> putCategoria(@RequestBody Categoria categoria, @PathVariable UUID id) {
 		categoria.setId(id);
-		Categoria obj = service.atualizar(categoria);
-		return ResponseEntity.ok().body(obj);
+		service.atualizar(categoria);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE) 
-	public ResponseEntity<Categoria> deleteCategoria(@PathVariable UUID id) {
-		Categoria obj = service.buscar(id);
+	public ResponseEntity<?> deleteCategoria(@PathVariable UUID id) {
 		service.deletar(id);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.noContent().build();
 	}
 }

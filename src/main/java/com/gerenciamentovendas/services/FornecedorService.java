@@ -38,6 +38,7 @@ public class FornecedorService {
 	}
 
 	public Fornecedor atualizar(Fornecedor fornecedor) {
+		this.buscar(fornecedor.getId());
 		Fornecedor obj = repoFornecedor.save(fornecedor);		
 		repoEmail.saveAll(fornecedor.getEmails());
 		repoTelefone.saveAll(fornecedor.getTelefones());
@@ -45,6 +46,7 @@ public class FornecedorService {
 	}
 
 	public void deletar(UUID id) {
+		this.buscar(id);
 		repoFornecedor.deleteById(id);
 	}
 }

@@ -28,24 +28,23 @@ public class FornecedorResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Fornecedor> postFornecedor(@RequestBody Fornecedor fornecedor) {
+	public ResponseEntity<?> postFornecedor(@RequestBody Fornecedor fornecedor) {
 		Fornecedor obj = service.cadastrar(fornecedor);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<Fornecedor> putFornecedor(@RequestBody Fornecedor fornecedor, @PathVariable UUID id) {
+	public ResponseEntity<?> putFornecedor(@RequestBody Fornecedor fornecedor, @PathVariable UUID id) {
 		fornecedor.setId(id);
-		Fornecedor obj = service.atualizar(fornecedor);
-		return ResponseEntity.ok().body(obj);
+		service.atualizar(fornecedor);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE) 
-	public ResponseEntity<Fornecedor> deleteFornecedor(@PathVariable UUID id) {
-		Fornecedor obj = service.buscar(id);
+	public ResponseEntity<?> deleteFornecedor(@PathVariable UUID id) {
 		service.deletar(id);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.noContent().build();
 	}
 
 }

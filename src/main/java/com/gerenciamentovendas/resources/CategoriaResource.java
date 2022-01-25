@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.UUID;
 
 import com.gerenciamentovendas.dto.request.CategoriaDTO;
+import com.gerenciamentovendas.dto.response.MessageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,27 +25,24 @@ public class CategoriaResource {
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET) 
 	public ResponseEntity<CategoriaDTO> getCategoria(@PathVariable UUID id) {
-		Categoria obj = service.buscar(id);
+		CategoriaDTO obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> postCategoria(@RequestBody CategoriaDTO categoriaDTO) {
-		Categoria obj = service.cadastrar(categoriaDTO);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	public MessageResponseDTO postCategoria(@RequestBody CategoriaDTO categoriaDTO) {
+		return service.cadastrar(categoriaDTO);
+		//URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		//return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<?> putCategoria(@RequestBody CategoriaDTO categoriaDTO, @PathVariable UUID id) {
-		categoriaDTO.setId(id);
-		service.atualizar(categoriaDTO);
-		return ResponseEntity.noContent().build();
+	public MessageResponseDTO putCategoria(@RequestBody CategoriaDTO categoriaDTO, @PathVariable UUID id) {
+		return service.atualizar(categoriaDTO, id);
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE) 
-	public ResponseEntity<?> deleteCategoria(@PathVariable UUID id) {
-		service.deletar(id);
-		return ResponseEntity.noContent().build();
+	public MessageResponseDTO deleteCategoria(@PathVariable UUID id) {
+		return service.deletar(id);
 	}
 }

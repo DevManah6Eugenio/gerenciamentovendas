@@ -3,6 +3,7 @@ package com.gerenciamentovendas.resources;
 import java.net.URI;
 import java.util.UUID;
 
+import com.gerenciamentovendas.dto.request.CategoriaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.gerenciamentovendas.domain.Categoria;
 import com.gerenciamentovendas.services.CategoriaService;
 
 @RestController
@@ -23,22 +23,22 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET) 
-	public ResponseEntity<Categoria> getCategoria(@PathVariable UUID id) {
+	public ResponseEntity<CategoriaDTO> getCategoria(@PathVariable UUID id) {
 		Categoria obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> postCategoria(@RequestBody Categoria categoria) {
-		Categoria obj = service.cadastrar(categoria);
+	public ResponseEntity<?> postCategoria(@RequestBody CategoriaDTO categoriaDTO) {
+		Categoria obj = service.cadastrar(categoriaDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT) 
-	public ResponseEntity<?> putCategoria(@RequestBody Categoria categoria, @PathVariable UUID id) {
-		categoria.setId(id);
-		service.atualizar(categoria);
+	public ResponseEntity<?> putCategoria(@RequestBody CategoriaDTO categoriaDTO, @PathVariable UUID id) {
+		categoriaDTO.setId(id);
+		service.atualizar(categoriaDTO);
 		return ResponseEntity.noContent().build();
 	}
 	

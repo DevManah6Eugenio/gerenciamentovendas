@@ -7,10 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface CategoriaMapper {
-
     CategoriaMapper INSTANCE = Mappers.getMapper(CategoriaMapper.class);
-
     Categoria toModel(CategoriaDTO categoriaDTO);
-
     CategoriaDTO toDTO(Categoria categoria);
 }

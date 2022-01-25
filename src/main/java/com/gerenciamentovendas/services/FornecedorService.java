@@ -3,6 +3,8 @@ package com.gerenciamentovendas.services;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.gerenciamentovendas.dto.request.FornecedorDTO;
+import com.gerenciamentovendas.dto.response.MessageResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class FornecedorService {
 	@Autowired
 	private TelefoneRepository repoTelefone;
 	
-	public Fornecedor buscar(UUID id) {
+	public FornecedorDTO buscar(UUID id) {
 		Optional<Fornecedor> obj = repoFornecedor.findById(id);
 		Fornecedor ret = obj.orElseThrow(() -> new ObjectNotFoundException("Fornecedor não encontrado! Id: " + id));
 		ret.setEmails(repoEmail.findByFornecedor(ret));
@@ -29,7 +31,7 @@ public class FornecedorService {
 		return ret; 
 	}
 
-	public Fornecedor cadastrar(Fornecedor fornecedor) {
+	public MessageResponseDTO cadastrar(FornecedorDTO fornecedorDTO) {
 		fornecedor.setId(null);
 		Fornecedor obj = repoFornecedor.save(fornecedor);
 		repoEmail.saveAll(fornecedor.getEmails());
@@ -37,7 +39,7 @@ public class FornecedorService {
 		return this.buscar(obj.getId());
 	}
 
-	public Fornecedor atualizar(Fornecedor fornecedor) {
+	public MessageResponseDTO atualizar(FornecedorDTO fornecedorDTO) {
 		this.buscar(fornecedor.getId());
 		Fornecedor obj = repoFornecedor.save(fornecedor);		
 		repoEmail.saveAll(fornecedor.getEmails());
@@ -45,7 +47,7 @@ public class FornecedorService {
 		return this.buscar(obj.getId());
 	}
 
-	public void deletar(UUID id) {
+	public MessageResponseDTO deletar(UUID id) {
 		this.buscar(id);
 		repoFornecedor.deleteById(id);
 	}
